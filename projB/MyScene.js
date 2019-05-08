@@ -29,8 +29,8 @@ class MyScene extends CGFscene {
 
         //Objects connected to MyInterface
         this.displayAxis = true;
-        this.displayPlane = true;
-        this.displayMap = true;
+        this.displayPlane = false;
+        this.displayMap = false;
         this.displayHouse = false;
     }
     initLights() {
@@ -88,6 +88,9 @@ class MyScene extends CGFscene {
             this.house.display();
             this.popMatrix();
         }
+
+       
+
         // ---- END Primitive drawing section
     }
 }
