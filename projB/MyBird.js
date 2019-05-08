@@ -11,10 +11,13 @@ class MyBird extends CGFobject {
     }
 
 	init(scene) {
-        
-
-
-        
+        this.body = new MySphere (this.scene);
+        this.head = new MySphere (this.scene);
+        this.rEye = new MySphereTop (this.scene);
+        this.lEye = new MySphereTop (this.scene);
+        this.beak = new MyPyramid (this.scene, 3, 3);
+        this.rTail = new MyTriangle (this.scene);
+        this.lTail = new MyTriangle (this.scene);
 
         this.textureFeathers = new CGFtexture(this.scene, 'images/feathers.png');
         this.materialFeathers = new CGFappearance(this.scene);
@@ -40,88 +43,65 @@ class MyBird extends CGFobject {
     }
 
 	display () {
-        //Sides    
-        this.materialSide.apply();
-       
-        //Front QUAD
-            this.scene.pushMatrix();
-            this.scene.translate(0,0,0.5);
-            if (this.scene.texturaFiltering)
-                this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
-            this.quadFront.display(); 
-            this.scene.popMatrix();
+        
+        this.body.display();
+        
+        this.scene.pushMatrix();
+        this.scene.translate(1.30, 1, 0);
+        this.scene.scale(0.75, 0.8, 0.75);
+        this.head.display();
+        this.scene.popMatrix();
 
-        //Back QUAD
-            this.scene.pushMatrix();
-            this.scene.translate(0,0,-0.5);
-            this.scene.rotate(Math.PI,0,1,0);
-            if (this.scene.texturaFiltering)
-                this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
-            this.quadBack.display();
-            this.scene.popMatrix();
+        this.scene.pushMatrix();
+        this.scene.translate(1.6, 1.4, -0.5);
+        this.scene.scale(0.25, 0.25, 0.25);
+        this.scene.rotate(-Math.PI/2, 1, 0, 0);
+        this.rEye.display();
+        this.scene.popMatrix();
 
-        //Left QUAD
-            this.scene.pushMatrix();
-            this.scene.translate(-0.5,0,0);
-            this.scene.rotate(-Math.PI/2,0,1,0);
-            if (this.scene.texturaFiltering)
-                this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
-            this.quadLeft.display();
-            this.scene.popMatrix();
+        
+        this.scene.pushMatrix();
+        this.scene.translate(1.6, 1.4, 0.5);
+        this.scene.scale(0.25, 0.25, 0.25);
+        this.scene.rotate(Math.PI/2, 1, 0, 0);
+        this.lEye.display();
+        this.scene.popMatrix();
 
-        //Right QUAD
-            this.scene.pushMatrix();
-            this.scene.translate(0.5,0,0);
-            this.scene.rotate(Math.PI/2,0,1,0);
-            if (this.scene.texturaFiltering)
-                this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
-            this.quadRight.display();
-            this.scene.popMatrix();
+        this.scene.pushMatrix();
+        this.scene.translate(1.8, 0.8, 0);
+        this.scene.scale(0.5, 0.6, 0.5);
+        this.beak.display();
+        this.scene.popMatrix();
 
-        //Top QUAD
-            this.materialTop.apply();
-            this.scene.pushMatrix();
-            this.scene.translate(0,0.5,0);
-            this.scene.rotate(-Math.PI/2,1,0,0);
-            if (this.scene.texturaFiltering)
-                this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
-            this.quadTop.display();
-            this.scene.popMatrix();
+        this.scene.pushMatrix();
+        this.scene.translate(0.5, 0.5, 0);
+        this.scene.scale(3, 1, 1);
+        this.scene.rotate(Math.PI/8, 1, 0, 0);
+        this.lTail.display();
+        this.scene.popMatrix();
 
-        //Button QUAD
-            this.materialBotton.apply();
-            this.scene.pushMatrix();
-            this.scene.translate(0,-0.5,0);
-            this.scene.rotate(Math.PI/2,1,0,0);
-            if (this.scene.texturaFiltering)
-                this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
-            this.quadButton.display();
-            this.scene.popMatrix();
-
+        this.scene.pushMatrix();
+        this.scene.translate(0.5, 0.5, 0);
+        this.scene.scale(3, 1, 1);
+        this.scene.rotate(Math.PI, 1, 0, 0);
+        this.scene.rotate(-Math.PI/8, 1, 0, 0);
+        this.rTail.display();
+        this.scene.popMatrix();
     }
     
     enableNormalViz() {
-        this.quadFront.enableNormalViz();
-        this.quadBack.enableNormalViz();
-        this.quadLeft.enableNormalViz();
-        this.quadRight.enableNormalViz();
-        this.quadTop.enableNormalViz();
-        this.quadButton.enableNormalViz();
+        this.body.enableNormalViz();
+        this.head.enableNormalViz();
+        this.rEye.enableNormalViz();
+        this.lEye.enableNormalViz();
     }
     
     disableNormalViz() {
-        this.quadFront.disableNormalViz();
-        this.quadBack.disableNormalViz();
-        this.quadLeft.disableNormalViz();
-        this.quadRight.disableNormalViz();
-        this.quadTop.disableNormalViz();
-        this.quadButton.disableNormalViz();
-    }
-        
-    redifeMaterials (newMaterial) {
-        this.materialBotton = newMaterial;
-        this.materialSide = newMaterial;
-        this.materialTop = newMaterial;
+        this.body.disableNormalViz();
+        this.head.disableNormalViz();
+        this.rEye.disableNormalViz();
+        this.lEye.disableNormalViz();
+
     }
 
 }
