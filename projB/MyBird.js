@@ -94,6 +94,8 @@ class MyBird extends CGFobject {
         this.head.enableNormalViz();
         this.rEye.enableNormalViz();
         this.lEye.enableNormalViz();
+        this.rTail.enableNormalViz();
+        this.lTail.enableNormalViz();
     }
     
     disableNormalViz() {
@@ -101,7 +103,8 @@ class MyBird extends CGFobject {
         this.head.disableNormalViz();
         this.rEye.disableNormalViz();
         this.lEye.disableNormalViz();
-
+        this.rTail.disableNormalViz();
+        this.lTail.disableNormalViz();
     }
 
 }
