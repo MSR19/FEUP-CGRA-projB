@@ -12,7 +12,7 @@ class MySphereTop extends CGFobject {
 
 	initBuffers() {
 		this.vertices = [];
-		//this.normals = [];
+		this.normals = [];
 		//Counter-clockwise reference of vertices
 		this.indices = [];
 		//this.texCoords = [];
@@ -25,17 +25,24 @@ class MySphereTop extends CGFobject {
 
 			if (i%2 != 0) 
 				this.vertices.push(Math.cos(ang*(i*2)),1,Math.sin(ang*((i*2)+1)));
+			
 		}
+
+		this.normals.push(1,0,0);
+		this.normals.push(0,0,1);
+		this.normals.push(-1,0,0);
+		this.normals.push(0,0,-1);
 
 		for(var i = 0; i < this.slices; i++) {
 			//Vertices
 			this.vertices.push(Math.cos(ang*i),0,Math.sin(ang*i));
+			this.normals.push(Math.cos(ang*i),0,Math.sin(ang*i));
 		}
 
-		this.indices.push(2,1,0);
-		this.indices.push(0,3,2);
-		this.indices.push(2,3,0);
-		this.indices.push(0,1,2);
+		//this.indices.push(2,1,0);
+		//this.indices.push(0,3,2);
+		//this.indices.push(2,3,0);
+		//this.indices.push(0,1,2);
 		
 		for (var i = 0; i != 4; i++) {
 		
@@ -50,8 +57,25 @@ class MySphereTop extends CGFobject {
 				this.indices.push(i, i+1 , 6+(i*2));
 			}
 			
-		}
+		}	
 		
+		var ang = 2*Math.PI/this.slices;
+		for(var i = 0; i < 4; i++) {
+			//Vertices
+			if (i%2 == 0)
+				this.vertices.push(Math.cos(ang*((i*2)+1)),1,Math.sin(ang*(i*2)));
+
+			if (i%2 != 0) 
+				this.vertices.push(Math.cos(ang*(i*2)),1,Math.sin(ang*((i*2)+1)));
+
+			this.normals.push(0,1,0);
+		}
+
+		this.indices.push(14,13,12);
+		this.indices.push(12,15,14);
+		this.indices.push(14,15,12);
+		this.indices.push(12,13,14);
+
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers()
 	}
