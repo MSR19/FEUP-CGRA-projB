@@ -94,8 +94,6 @@ class MyScene extends CGFscene {
 
        this.bird.display();
 
-
-
         // ---- END Primitive drawing section
     }
 }

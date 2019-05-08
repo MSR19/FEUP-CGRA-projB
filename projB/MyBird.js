@@ -18,6 +18,8 @@ class MyBird extends CGFobject {
         this.beak = new MyPyramid (this.scene, 3, 3);
         this.rTail = new MyTriangle (this.scene);
         this.lTail = new MyTriangle (this.scene);
+        this.rWing = new MyWing (this.scene);
+        this.lWing = new MyWing (this.scene);
 
         this.textureFeathers = new CGFtexture(this.scene, 'images/feathers.png');
         this.materialFeathers = new CGFappearance(this.scene);
@@ -87,6 +89,20 @@ class MyBird extends CGFobject {
         this.scene.rotate(-Math.PI/8, 1, 0, 0);
         this.rTail.display();
         this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0.5, 0.6, 2);
+        this.scene.rotate(-Math.PI/2, 0, 1, 0);
+        this.rWing.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0.5, 0.6, -2);
+        this.scene.rotate(Math.PI/2, 0, 1, 0);
+        this.scene.rotate(Math.PI, 1, 0, 0);
+        this.lWing.display();
+        this.scene.popMatrix();
+
     }
     
     enableNormalViz() {
