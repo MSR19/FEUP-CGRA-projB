@@ -24,8 +24,13 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.plane = new Plane(this, 32);
+        //this.house = new MyHouse(this);
+        //this.cubeMap = new MyCubeMap (this);
 
         //Objects connected to MyInterface
+        this.displayAxis = true;
+        this.displayPlane = false;
+        
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -58,17 +63,20 @@ class MyScene extends CGFscene {
         this.applyViewMatrix();
 
         // Draw axis
-        this.axis.display();
+        if (this.displayAxis)
+            this.axis.display();
 
         //Apply default appearance
         this.setDefaultAppearance();
 
         // ---- BEGIN Primitive drawing section
-        this.pushMatrix();
-        this.rotate(-0.5*Math.PI, 1, 0, 0);
-        this.scale(60, 60, 1);
-        this.plane.display();
-        this.popMatrix();
+        if (this.displayPlane) {
+            this.pushMatrix();
+            this.rotate(-0.5*Math.PI, 1, 0, 0);
+            this.scale(60, 60, 1);
+            this.plane.display();
+            this.popMatrix();
+        }
         // ---- END Primitive drawing section
     }
 }

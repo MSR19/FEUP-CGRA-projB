@@ -16,6 +16,12 @@ class MyInterface extends CGFinterface {
         
         var obj = this;
 
+         //Axis checkBox
+         this.gui.add(this.scene, 'displayAxis').name('Axis');
+
+         //Plane checkBox
+         this.gui.add(this.scene, 'displayPlane').name('Plane');
+
         return true;
     }
 }

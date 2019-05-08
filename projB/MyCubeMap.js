@@ -62,35 +62,35 @@ class MyCubeMap extends CGFobject {
         this.materialRight.setTextureWrap('REPEAT', 'REPEAT');
 
 
-        this.textureTop = new CGFtexture(this.scene, 'Images/hills_up.png');
+        this.textureTop = new CGFtexture(this.scene, 'images/hills_up.png');
 
-        this.textureBotton = new CGFtexture(this.scene, 'Images/hills_dn.png');
+        this.textureBotton = new CGFtexture(this.scene, 'images/hills_dn.png');
 
-        this.textureLeft = new CGFtexture(this.scene, 'Images/hills_lf.png');
+        this.textureLeft = new CGFtexture(this.scene, 'images/hills_lf.png');
 
-        this.textureFront = new CGFtexture(this.scene, 'Images/hills_ft.png');
+        this.textureFront = new CGFtexture(this.scene, 'images/hills_ft.png');
 
-        this.textureBack = new CGFtexture(this.scene, 'Images/hills_bk.png');
+        this.textureBack = new CGFtexture(this.scene, 'images/hills_bk.png');
 
-        this.textureRight = new CGFtexture(this.scene, 'Images/hills_rt.png');
+        this.textureRight = new CGFtexture(this.scene, 'images/hills_rt.png');
 
 
-        this.textureNightTop = new CGFtexture(this.scene, 'Images/starfield_up.png');
+        this.textureNightTop = new CGFtexture(this.scene, 'images/starfield_up.png');
         
 
-        this.textureNightBotton = new CGFtexture(this.scene, 'Images/starfield_dn.png');
+        this.textureNightBotton = new CGFtexture(this.scene, 'images/starfield_dn.png');
         
 
-        this.textureNightLeft = new CGFtexture(this.scene, 'Images/starfield_lf.png');
+        this.textureNightLeft = new CGFtexture(this.scene, 'images/starfield_lf.png');
         
 
-        this.textureNightFront = new CGFtexture(this.scene, 'Images/starfield_ft.png');
+        this.textureNightFront = new CGFtexture(this.scene, 'images/starfield_ft.png');
         
 
-        this.textureNightBack = new CGFtexture(this.scene, 'Images/starfield_bk.png');
+        this.textureNightBack = new CGFtexture(this.scene, 'images/starfield_bk.png');
         
 
-        this.textureNightRight = new CGFtexture(this.scene, 'Images/starfield_rt.png');
+        this.textureNightRight = new CGFtexture(this.scene, 'images/starfield_rt.png');
         
     }
 
@@ -134,7 +134,7 @@ class MyCubeMap extends CGFobject {
         this.scene.scale(-1, 1, -1);
         this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
         this.quadBack.display();
-        this.scene.popMatrix();
+        this.scene.popMatrix();ua todos os ficheiros necessários para colocar estes elementos em
 
         //Left QUAD
         this.materialLeft.apply();

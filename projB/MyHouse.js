@@ -20,7 +20,7 @@ class MyHouse extends CGFobject {
         this.prism3 = new MyPrism(scene, 6, 1);
         this.prism4 = new MyPrism(scene, 6, 1);
 
-        this.textureMarble = new CGFtexture(scene, 'Images/marmore.jpg');
+        this.textureMarble = new CGFtexture(scene, 'images/marmore.jpg');
         this.materialMarble = new CGFappearance(scene);
         this.materialMarble.setAmbient(1, 1, 1, 1.0);
         this.materialMarble.setDiffuse(0.5, 0.5, 0.5, 1.0);
@@ -34,7 +34,7 @@ class MyHouse extends CGFobject {
         this.materialRoof.setDiffuse(0.5, 0.5, 0.5, 1.0);
         this.materialRoof.setSpecular(1, 1, 1, 1.0);
 
-        this.textureWall = new CGFtexture(scene, 'Images/woodwall.jpg');
+        this.textureWall = new CGFtexture(scene, 'images/woodwall.jpg');
         this.materialWall = new CGFappearance(scene);
         this.materialWall.setAmbient(1, 1, 1, 1.0);
         this.materialWall.setDiffuse(1, 1, 1, 1.0);
@@ -48,11 +48,11 @@ class MyHouse extends CGFobject {
     Display() {
         this.materialRoof.apply();
         this.scene.pushMatrix();
-        this.scene.translate(0, 2, 0);
-        this.scene.rotate(Math.PI / 4, 0, 1, 0);
-        this.scene.scale(3, 3, 3);
-        this.pyramid.display();
-        this.scene.popMatrix();
+        this.scene.translate(0,'Plane.js',
+        this.scene.rotate(Math.'Plane.js',
+        this.scene.scale(3, 3, 'Plane.js',
+        this.pyramid.display();'Plane.js',
+        this.scene.popMatrix();'Plane.js',
 
 
         
