@@ -134,7 +134,7 @@ class MyCubeMap extends CGFobject {
         this.scene.scale(-1, 1, -1);
         this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
         this.quadBack.display();
-        this.scene.popMatrix();ua todos os ficheiros necessários para colocar estes elementos em
+        this.scene.popMatrix();
 
         //Left QUAD
         this.materialLeft.apply();

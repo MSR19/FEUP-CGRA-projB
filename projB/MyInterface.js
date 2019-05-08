@@ -22,6 +22,12 @@ class MyInterface extends CGFinterface {
          //Plane checkBox
          this.gui.add(this.scene, 'displayPlane').name('Plane');
 
+         //Map chaeckBox
+         this.gui.add(this.scene, 'displayMap').name('Map');
+         
+         //House checkBox
+         this.gui.add(this.scene, 'displayHouse').name('House');
+
         return true;
     }
 }

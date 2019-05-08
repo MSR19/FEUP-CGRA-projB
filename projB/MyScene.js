@@ -24,13 +24,14 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.plane = new Plane(this, 32);
-        //this.house = new MyHouse(this);
-        //this.cubeMap = new MyCubeMap (this);
+        this.house = new MyHouse (this);
+        this.cubeMap = new MyCubeMap (this);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
-        this.displayPlane = false;
-        
+        this.displayPlane = true;
+        this.displayMap = true;
+        this.displayHouse = false;
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -70,11 +71,21 @@ class MyScene extends CGFscene {
         this.setDefaultAppearance();
 
         // ---- BEGIN Primitive drawing section
+        if (this.displayMap)
+            this.cubeMap.display();
+
         if (this.displayPlane) {
             this.pushMatrix();
             this.rotate(-0.5*Math.PI, 1, 0, 0);
-            this.scale(60, 60, 1);
+            this.scale(500, 500, 1);
             this.plane.display();
+            this.popMatrix();
+        }
+
+        if (this.displayHouse) {
+            this.pushMatrix();
+            this.translate(8, 0, 0);
+            this.house.display();
             this.popMatrix();
         }
         // ---- END Primitive drawing section
