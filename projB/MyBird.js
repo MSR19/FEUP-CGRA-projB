@@ -25,14 +25,14 @@ class MyBird extends CGFobject {
         this.rWing = new MyWing (this.scene);
         this.lWing = new MyWing (this.scene);
 
-        this.textureFeathers = new CGFtexture(this.scene, 'images/feathers.jpg');
+        //this.textureFeathers = new CGFtexture(this.scene, 'images/feathers.jpg');
         this.materialFeathers = new CGFappearance(this.scene);
-        this.materialFeathers.setAmbient(1, 1, 1, 1.0);
-        this.materialFeathers.setDiffuse(1, 1, 1, 1.0);
-        this.materialFeathers.setSpecular(1, 1, 1, 1.0);
+        this.materialFeathers.setAmbient(0.4, 0.4, 1, 1.0);
+        this.materialFeathers.setDiffuse(0.4, 0.4, 1, 1.0);
+        this.materialFeathers.setSpecular(0.4, 0.4, 1, 1.0);
         this.materialFeathers.setShininess(10.0);
-        this.materialFeathers.setTexture(this.textureFeathers);
-        this.materialFeathers.setTextureWrap('REPEAT', 'REPEAT');
+        //this.materialFeathers.setTexture(this.textureFeathers);
+        //this.materialFeathers.setTextureWrap('REPEAT', 'REPEAT');
 
         this.materialBeak = new CGFappearance(this.scene);
         this.materialBeak.setAmbient(1, 1, 0, 1.0);
@@ -40,12 +40,13 @@ class MyBird extends CGFobject {
         this.materialBeak.setSpecular(1, 1, 0, 1.0);
         this.materialBeak.setShininess(10.0);
 
-       
+
         this.materialEyes = new CGFappearance(this.scene);
         this.materialEyes.setAmbient(0, 0, 0, 1.0);
         this.materialEyes.setDiffuse(0, 0, 0, 1.0);
         this.materialEyes.setSpecular(0, 0, 0, 1.0);
         this.materialEyes.setShininess(10.0);;
+
     }
 
     display() {
@@ -64,6 +65,7 @@ class MyBird extends CGFobject {
         this.head.display();
         this.scene.popMatrix();
 
+        this.materialEyes.apply();
         this.scene.pushMatrix();
         this.scene.translate(1.6, 1.4, -0.5);
         this.scene.scale(0.25, 0.25, 0.25);
@@ -79,12 +81,14 @@ class MyBird extends CGFobject {
         this.lEye.display();
         this.scene.popMatrix();
 
+        this.materialBeak.apply();
         this.scene.pushMatrix();
         this.scene.translate(1.8, 0.8, 0);
         this.scene.scale(0.5, 0.6, 0.5);
         this.beak.display();
         this.scene.popMatrix();
 
+        this.materialFeathers.apply();
         this.scene.pushMatrix();
         this.scene.translate(0.5, 0.5, 0);
         this.scene.scale(3, 1, 1);
