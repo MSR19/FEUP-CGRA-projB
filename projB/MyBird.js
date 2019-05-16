@@ -21,7 +21,7 @@ class MyBird extends CGFobject {
         this.rWing = new MyWing (this.scene);
         this.lWing = new MyWing (this.scene);
 
-        this.textureFeathers = new CGFtexture(this.scene, 'images/feathers.png');
+        this.textureFeathers = new CGFtexture(this.scene, 'images/feathers.jpg');
         this.materialFeathers = new CGFappearance(this.scene);
         this.materialFeathers.setAmbient(1, 1, 1, 1.0);
         this.materialFeathers.setDiffuse(1, 1, 1, 1.0);
@@ -45,7 +45,8 @@ class MyBird extends CGFobject {
     }
 
 	display () {
-        
+        this.materialFeathers.apply();
+
         this.body.display();
         
         this.scene.pushMatrix();
@@ -112,6 +113,8 @@ class MyBird extends CGFobject {
         this.lEye.enableNormalViz();
         this.rTail.enableNormalViz();
         this.lTail.enableNormalViz();
+        this.rWing.enableNormalViz();
+        this.lWing.enableNormalViz();
     }
     
     disableNormalViz() {
@@ -120,7 +123,9 @@ class MyBird extends CGFobject {
         this.rEye.disableNormalViz();
         this.lEye.disableNormalViz();
         this.rTail.disableNormalViz();
-        this.lTail.disableNormalViz();
+        this.lTail.disableNormalViz();       
+        this.rWing.disableNormalViz();
+        this.lWing.disableNormalViz();
     }
 
 }
