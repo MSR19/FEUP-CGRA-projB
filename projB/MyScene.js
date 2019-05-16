@@ -26,7 +26,7 @@ class MyScene extends CGFscene {
         this.plane = new Plane(this, 32);
         this.house = new MyHouse (this);
         this.cubeMap = new MyCubeMap (this);
-        this.bird = new MyBird (this);
+        this.bird = new MyBird (this, 0, 4, 0);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -91,7 +91,7 @@ class MyScene extends CGFscene {
         }
 
    
-        this.bird.enableNormalViz();
+        //this.bird.enableNormalViz();
        this.bird.display();
 
         // ---- END Primitive drawing section

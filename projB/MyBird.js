@@ -4,10 +4,14 @@
  * @param scene - Reference to MyScene object
  */
 class MyBird extends CGFobject {
-	constructor(scene) {
+	constructor(scene, x, y, z) {
         super(scene);
         this.init(scene);
         this.scene = scene;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.up = true;
     }
 
 	init(scene) {
@@ -44,11 +48,16 @@ class MyBird extends CGFobject {
         this.materialEyes.setShininess(10.0);;
     }
 
-	display () {
+    display() {
+        
+        this.update();
+        this.scene.pushMatrix();
+        this.scene.translate(this.x, this.y, this.z);
+
+
         this.materialFeathers.apply();
 
         this.body.display();
-        
         this.scene.pushMatrix();
         this.scene.translate(1.30, 1, 0);
         this.scene.scale(0.75, 0.8, 0.75);
@@ -104,6 +113,8 @@ class MyBird extends CGFobject {
         this.lWing.display();
         this.scene.popMatrix();
 
+        this.scene.popMatrix();
+
     }
     
     enableNormalViz() {
@@ -126,6 +137,25 @@ class MyBird extends CGFobject {
         this.lTail.disableNormalViz();       
         this.rWing.disableNormalViz();
         this.lWing.disableNormalViz();
+    }
+
+    update() {
+        if (this.up) {
+            if (this.y > 5) {
+                this.up = false;
+            }
+            else {
+                this.y += 0.03;
+            }
+        }
+        else {
+            if (this.y < 4) {
+                this.up = true;
+            }
+            else {
+                this.y -= 0.03;
+            }
+        }
     }
 
 }
