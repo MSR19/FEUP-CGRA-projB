@@ -27,7 +27,10 @@ class MyInterface extends CGFinterface {
          
          //House checkBox
         this.gui.add(this.scene, 'displayHouse').name('House');
-        
+
+         //Terrain chackBox
+        this.gui.add(this.scene, 'displayTerrain').name('Terrain');
+
         this.gui.add(this.scene, 'scaleFactor', 0.1, 3).name('scaleFactor');
 
         this.gui.add(this.scene, 'speedFactor', 0.1, 3).name('speedFactor');

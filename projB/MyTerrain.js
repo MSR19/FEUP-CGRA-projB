@@ -33,17 +33,21 @@ class MyTerrain extends CGFobject {
     }
 
 	display () {
+        this.scene.pushMatrix();
         this.appearanceBW.apply();   
         this.altimetry.bind(1);
         this.height.bind(2);
         
         this.scene.setActiveShader(this.shader);
 
-        this.scene.pushMatrix();
+        
         this.scene.rotate(-0.5*Math.PI, 1, 0, 0);
-        this.scene.scale(64, 64, 1);
+        this.scene.scale(80, 80, 1);
 		this.plane.display();
-		this.scene.popMatrix();
+        this.scene.popMatrix();
+        
+        this.scene.setActiveShader(this.scene.defaultShader);
+        this.scene.setDefaultAppearance();
     }
     
     enableNormalViz() {
@@ -54,12 +58,5 @@ class MyTerrain extends CGFobject {
         this.plane.disableNormalViz();
     }
      
-    /*
-    redifeMaterials (newMaterial) {
-        this.materialBotton = newMaterial;
-        this.materialSide = newMaterial;
-        this.materialTop = newMaterial;
-    }
-    */
 }
 
