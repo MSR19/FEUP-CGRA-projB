@@ -26,13 +26,15 @@ class MyScene extends CGFscene {
         this.plane = new Plane(this, 32);
         this.house = new MyHouse (this);
         this.cubeMap = new MyCubeMap (this);
-        this.bird = new MyBird (this, 0, 4, 0);
+        this.bird = new MyBird (this, 0, 4, 0, Math.PI/3, 0);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
         this.displayPlane = false;
         this.displayMap = false;
         this.displayHouse = false;
+        this.scaleFactor = 1;
+        this.speedFactor = 0.1;
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -50,7 +52,7 @@ class MyScene extends CGFscene {
         this.setShininess(10.0);
     }
     update(t){
-
+        this.checkKeys();
     }
 
     display() {
@@ -92,8 +94,40 @@ class MyScene extends CGFscene {
 
    
         //this.bird.enableNormalViz();
-       this.bird.display();
+       this.bird.display(this.scaleFactor);
 
         // ---- END Primitive drawing section
+    }
+
+
+    checkKeys() {
+        var text = "Keys pressed: "; var keysPressed = false;
+        // Check for key codes e.g. in ​https://keycode.info/
+        if (this.gui.isKeyPressed("KeyW")) {
+            text += " W ";
+            this.bird.accelerate(0.1 * this.speedFactor);
+            keysPressed = true;
+        }
+        if (this.gui.isKeyPressed("KeyS")) {
+            text += " S ";
+            this.bird.accelerate(-0.1 * this.speedFactor);
+            keysPressed = true;
+        }
+        if (this.gui.isKeyPressed("KeyA")) {
+            text += " A ";
+            this.bird.turn(0.2 * this.speedFactor);
+            keysPressed = true;
+        }
+        if (this.gui.isKeyPressed("KeyD")) {
+            text += " D ";
+            this.bird.turn(-0.2 * this.speedFactor);
+            keysPressed = true;
+        }
+        if (this.gui.isKeyPressed("KeyR")) {
+            text += " R ";
+            this.bird.reset();
+            keysPressed = true;
+        }
+        if (keysPressed) console.log(text);
     }
 }

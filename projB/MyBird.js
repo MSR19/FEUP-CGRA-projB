@@ -4,7 +4,7 @@
  * @param scene - Reference to MyScene object
  */
 class MyBird extends CGFobject {
-	constructor(scene, x, y, z) {
+	constructor(scene, x, y, z, angle, speed) {
         super(scene);
         this.init(scene);
         this.scene = scene;
@@ -12,6 +12,8 @@ class MyBird extends CGFobject {
         this.y = y;
         this.z = z;
         this.up = true;
+        this.direction = angle;
+        this.speed = speed;
     }
 
 	init(scene) {
@@ -49,11 +51,13 @@ class MyBird extends CGFobject {
 
     }
 
-    display() {
+    display(scaleFactor) {
         
         this.update();
         this.scene.pushMatrix();
         this.scene.translate(this.x, this.y, this.z);
+        this.scene.rotate(this.direction, 0, 1, 0);
+        this.scene.scale(scaleFactor, scaleFactor, scaleFactor);
 
 
         this.materialFeathers.apply();
@@ -144,6 +148,8 @@ class MyBird extends CGFobject {
     }
 
     update() {
+        this.x += Math.cos(this.direction) * this.speed;
+        this.z -= Math.sin(this.direction) * this.speed;
         if (this.up) {
             if (this.y > 5) {
                 this.up = false;
@@ -162,5 +168,20 @@ class MyBird extends CGFobject {
         }
     }
 
-}
+    turn(v) {
+        this.direction += v;
+    }
 
+
+    accelerate(v) {
+        this.speed += v;
+    }
+
+    reset() {
+        this.speed = 0;
+        this.direction = 0;
+        this.x = 0;
+        this.y = 4;
+        this.z = 0;
+    }
+}
