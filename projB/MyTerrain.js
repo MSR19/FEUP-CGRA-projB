@@ -58,12 +58,5 @@ class MyTerrain extends CGFobject {
         this.plane.disableNormalViz();
     }
      
-    /*
-    redifeMaterials (newMaterial) {
-        this.materialBotton = newMaterial;
-        this.materialSide = newMaterial;
-        this.materialTop = newMaterial;
-    }
-    */
 }
 

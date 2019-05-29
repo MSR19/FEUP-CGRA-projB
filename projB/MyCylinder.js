@@ -23,7 +23,7 @@ class MyCylinder extends CGFobject {
 
 		//Vertices & Normals & Textcoords
 		var ang = 2*Math.PI/this.slices;
-		for(var i = 0; i < this.slices; i++) {
+		for(var i = 0; i < this.slices+1; i++) {
 			//Vertices
 			this.vertices.push(Math.cos(ang*i),0,Math.sin(ang*i));
 			this.vertices.push(Math.cos(ang*i),1,Math.sin(ang*i));
@@ -31,8 +31,9 @@ class MyCylinder extends CGFobject {
 			this.normals.push(Math.cos(ang*i),0,Math.sin(ang*i));
 			this.normals.push(Math.cos(ang*i),0,Math.sin(ang*i));
 			//TextCoords
-			this.texCoords.push(i/(this.slices-1),1);
-			this.texCoords.push(i/(this.slices-1),0);
+			this.texCoords.push(i/(this.slices),0);
+			this.texCoords.push(i/(this.slices),1);
+			
 		}
 
 		//Indice
@@ -42,7 +43,7 @@ class MyCylinder extends CGFobject {
 		}
 
 		//More Vertices & Normals
-		for(var i = 0; i < this.slices; i++) {
+		for(var i = 0; i < this.slices+1; i++) {
 			//Vertices
 			this.vertices.push(Math.cos(ang*i),0,Math.sin(ang*i));
 			this.vertices.push(Math.cos(ang*i),1,Math.sin(ang*i));
@@ -50,9 +51,11 @@ class MyCylinder extends CGFobject {
 			this.normals.push(Math.cos(ang*i),0,Math.sin(ang*i));
 			this.normals.push(Math.cos(ang*i),0,Math.sin(ang*i));
 			//TextCoords
-			this.texCoords.push(i/(this.slices-1),1);
-			this.texCoords.push(i/(this.slices-1),0);
+			this.texCoords.push(i/(this.slices),1);
+			this.texCoords.push(i/(this.slices),0);
 		}
+
+
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
