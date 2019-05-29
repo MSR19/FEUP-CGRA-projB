@@ -34,8 +34,20 @@ class MyScene extends CGFscene {
         this.displayPlane = false;
         this.displayMap = false;
         this.displayHouse = false;
+        this.displayTerrain = false;
         this.scaleFactor = 1;
         this.speedFactor = 0.1;
+
+        //plane material 
+        this.materialPlane = new CGFappearance(this);
+		this.materialPlane.setAmbient(1, 1, 1, 1);
+		this.materialPlane.setDiffuse(1, 1, 1, 1);
+		this.materialPlane.setSpecular(1, 1, 1, 1);
+        this.materialPlane.setShininess(120);
+        
+        this.texturePlane = new CGFtexture(this, "images/mineTop.png");
+		this.materialPlane.setTexture(this.texturePlane);
+        this.materialPlane.setTextureWrap('REPEAT', 'REPEAT');
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -79,6 +91,7 @@ class MyScene extends CGFscene {
             this.cubeMap.display();
 
         if (this.displayPlane) {
+            this.materialPlane.apply();
             this.pushMatrix();
             this.rotate(-0.5*Math.PI, 1, 0, 0);
             this.scale(500, 500, 1);
@@ -93,10 +106,11 @@ class MyScene extends CGFscene {
             this.popMatrix();
         }
 
-        this.terrain.display();
-        //this.bird.enableNormalViz();
-       this.bird.display(this.scaleFactor);
-
+        if (this.displayTerrain)
+            this.terrain.display();
+        
+        this.bird.display(this.scaleFactor);
+        
         // ---- END Primitive drawing section
     }
 

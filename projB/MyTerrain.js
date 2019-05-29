@@ -42,7 +42,7 @@ class MyTerrain extends CGFobject {
 
         
         this.scene.rotate(-0.5*Math.PI, 1, 0, 0);
-        this.scene.scale(64, 64, 1);
+        this.scene.scale(80, 80, 1);
 		this.plane.display();
         this.scene.popMatrix();
         
