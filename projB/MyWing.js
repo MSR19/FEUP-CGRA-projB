@@ -8,47 +8,32 @@ class MyWing extends CGFobject {
         super(scene);
         this.init(scene);
         this.scene = scene;
+        this.outerx = 0;
+        this.outerz = 0
+        this.outery = 0;
+        this.angle = -Math.PI / 3;
     }
 
 	init(scene) {
-        this.triangle1 = new MyTriangle (this.scene);
-        this.triangle2 = new MyTriangle (this.scene);
-        this.triangle3 = new MyTriangle (this.scene);
+        this.quad = new MyQuad(this.scene);
         this.triangle4 = new MyTriangle (this.scene);
         this.triangle5 = new MyTriangle (this.scene);
     }
 
-	display () {     
-        this.scene.pushMatrix();
-        this.scene.scale(2, 1, 0.75);
-        this.triangle1.display();
-        this.scene.popMatrix();
+    display() { 
+        //animations
 
-        this.scene.pushMatrix();
-        this.scene.scale(2, 1, 0.75);
-        this.scene.rotate(-Math.PI, 0, 1, 0);
-        this.scene.translate(0.70, 0, -0.70);
-        this.triangle2.display();
+        this.scene.pushMatrix()
+        this.scene.rotate(this.angle, 0, 0, 1);
+        this.scene.translate(1.5, 0, 0);
+        this.displayfirstpart();
         this.scene.popMatrix();
+        this.scene.pushMatrix()
+        this.outery = Math.sin(this.angle) * 2;
+        this.outerx = Math.cos(this.angle) * 2;
+        this.scene.translate(this.outerx, this.outery, this.outerz);
+        this.displayouterpart();
 
-        this.scene.pushMatrix();
-        this.scene.translate(0.1, 0, 0.52);
-        this.scene.scale(2, 1, 0.5);
-        this.triangle3.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.scene.rotate(Math.PI/2, 0, 1, 0);
-        this.scene.translate(0, 0, 0);
-        this.scene.scale(0.7, 1, 1.2);
-        this.triangle4.display();
-        this.scene.popMatrix();
-
-        this.scene.pushMatrix();
-        this.scene.translate(0.85, 0, 0.75);
-        this.scene.scale(1, 1, 0.35);
-        this.scene.rotate(-Math.PI/2, 0, 1, 0);
-        this.triangle5.display();
         this.scene.popMatrix();
     }
     
@@ -67,6 +52,45 @@ class MyWing extends CGFobject {
         this.triangle4.disableNormalViz();
         this.triangle5.disableNormalViz();
     }
+    
+    update(up) {
+        if (up) {
+            this.angle += 0.07;
+        }
+        else {
+            this.angle -= 0.07;
+        }
+    }
+
+    displayfirstpart() {
+  
+        this.scene.pushMatrix();
+        this.scene.translate(-0.5, 0, 0.26);
+        this.scene.scale(2, 1, 0.53);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+        this.quad.display();
+        this.scene.popMatrix();
+    }
+
+    displayouterpart() {
+
+
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI / 2, 0, 1, 0);
+        this.scene.scale(0.7, 1, 1.2);
+        this.triangle4.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0.85, 0, 0.75);
+        this.scene.scale(1, 1, 0.35);
+        this.scene.rotate(-Math.PI / 2, 0, 1, 0);
+        this.triangle5.display();
+        this.scene.popMatrix();
+    }
+
+    reset() {
+        this.angle = -Math.PI / 3;
+    }
 
 }
-

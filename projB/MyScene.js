@@ -26,8 +26,9 @@ class MyScene extends CGFscene {
         this.plane = new Plane(this, 32);
         this.house = new MyHouse (this);
         this.cubeMap = new MyCubeMap (this);
-        this.bird = new MyBird (this, 0, 4, 0, Math.PI/3, 0);
         this.terrain = new MyTerrain(this);
+        this.bird = new MyBird(this, 0, 4, 0, 0, 0);
+        this.wing = new MyWing(this);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -74,7 +75,11 @@ class MyScene extends CGFscene {
         //Apply default appearance
         this.setDefaultAppearance();
 
+        
+        this.bird.display(this.scaleFactor);
         // ---- BEGIN Primitive drawing section
+        //this.wing.display(); 
+
         if (this.displayMap)
             this.cubeMap.display();
 
@@ -93,9 +98,8 @@ class MyScene extends CGFscene {
             this.popMatrix();
         }
 
-        this.terrain.display();
+        //this.terrain.display();
         //this.bird.enableNormalViz();
-       this.bird.display(this.scaleFactor);
 
         // ---- END Primitive drawing section
     }
