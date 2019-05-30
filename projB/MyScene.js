@@ -185,11 +185,12 @@ class MyScene extends CGFscene {
         if (this.bird.descending) {
             if (this.bird.y < 3) {
                 for (let i = 0; i != this.logs.length; i++) {
-                    if ((Math.abs(this.bird.x - this.logs[i].x) < 1) && (Math.abs(this.bird.z - this.logs[i].z) < 1)) {
-                        this.bird.catch = true;
-                        this.logs[i].apanhado = true;
+                    if (!this.logs[i].apanhado) {
+                        if ((Math.abs(this.bird.x - this.logs[i].x) < 1) && (Math.abs(this.bird.z - this.logs[i].z) < 1)) {
+                            this.bird.catch = true;
+                            this.logs[i].apanhado = true;
+                        }
                     }
-
                 }
                 if (this.bird.catch && (Math.abs(this.bird.x - this.nest.x) < 1) && (Math.abs(this.bird.z - this.nest.z) < 1)) {
                     this.nest.newLog();
