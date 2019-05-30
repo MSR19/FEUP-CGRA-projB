@@ -14,6 +14,7 @@ class MyBird extends CGFobject {
         this.up = true;
         this.direction = angle;
         this.speed = speed;
+        this.catch = false;
     }
 
 	init(scene) {
@@ -26,6 +27,9 @@ class MyBird extends CGFobject {
         this.lTail = new MyTriangle (this.scene);
         this.rWing = new MyWing (this.scene);
         this.lWing = new MyWing (this.scene);
+        this.rLeg = new MyLeg(this.scene);
+        this.lLeg = new MyLeg(this.scene);
+        this.log = new MyTreeBranch(this.scene);
 
         //this.textureFeathers = new CGFtexture(this.scene, 'images/feathers.jpg');
         this.materialFeathers = new CGFappearance(this.scene);
@@ -125,8 +129,37 @@ class MyBird extends CGFobject {
         this.lWing.display();
         this.scene.popMatrix();
 
-        this.scene.popMatrix();
+       
+        if(this.catch) {
+            this.rLeg.update(true);
+            this.lLeg.update(true);
 
+            this.scene.pushMatrix();
+            this.scene.rotate(Math.PI/2,1,0,0);
+            this.scene.scale(0.5,1,0.5);
+            this.scene.translate(0.6,-1,1.8);
+            this.log.display();
+            this.scene.popMatrix(); 
+        }
+        else {
+            this.rLeg.update(false);
+            this.lLeg.update(false);
+        }
+
+
+        this.materialBeak.apply();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0, -1.3, -0.4);
+        this.lLeg.display();
+        this.scene.popMatrix(); 
+
+        this.scene.pushMatrix();
+        this.scene.translate(0, -1.3, 0.4);
+        this.rLeg.display();
+        this.scene.popMatrix(); 
+
+        this.scene.popMatrix();
     }
     
     enableNormalViz() {
