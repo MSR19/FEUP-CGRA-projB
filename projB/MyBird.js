@@ -15,6 +15,8 @@ class MyBird extends CGFobject {
         this.direction = angle;
         this.speed = speed;
         this.catch = false;
+        this.descending = false;
+        this.rad = 0;
     }
 
 	init(scene) {
@@ -188,24 +190,33 @@ class MyBird extends CGFobject {
         
         this.x += Math.cos(this.direction) * this.speed;
         this.z -= Math.sin(this.direction) * this.speed;
-        if (this.up) {
-            if (this.y > 5) {
-                this.up = false;
-            }
-            else {
-                
-                this.y += 0.03;
+
+        if (this.descending)   {            
+            this.rad = this.rad + 0.02;
+            this.y = 1.5*Math.sin(this.rad)+3.5;
+
+            if (this.rad > (Math.PI*2 + Math.PI/2)) {
+                this.descending = false;
             }
         }
         else {
-            if (this.y < 4) {
-                this.up = true;
+            if (this.up) {
+                if (this.y > 5) {
+                    this.up = false;
+                }
+                else {
+                    this.y += 0.03;
+                }
             }
             else {
-                this.y -= 0.03;
+                if (this.y < 4) {
+                    this.up = true;
+                }
+                else {
+                    this.y -= 0.03;
+                }
             }
         }
-
     }
 
     turn(v) {
@@ -215,6 +226,13 @@ class MyBird extends CGFobject {
 
     accelerate(v) {
         this.speed += v;
+    }
+
+    descent() {
+        if (this.descending == false) {
+            this.rad = Math.PI/2;
+        }
+        this.descending = true;    
     }
 
     reset() {
