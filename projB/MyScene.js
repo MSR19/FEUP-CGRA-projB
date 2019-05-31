@@ -48,7 +48,7 @@ class MyScene extends CGFscene {
         this.treeiterations = 6;
         this.treescaleFactor = 0.8;
 
-        this.doGenerate = function () {
+        this.doGenerateLightning = function () {
             this.lightning.generate(
                 this.axiom,
                 {
@@ -59,6 +59,9 @@ class MyScene extends CGFscene {
                 this.iterations,
                 this.scaleFactor
             );
+        }
+
+        this.doGenerateTree = function () { 
             this.tree.generate(
                 this.treeaxiom,
                 {
@@ -68,10 +71,11 @@ class MyScene extends CGFscene {
                 this.treeangle,
                 this.treeiterations,
                 this.treescaleFactor               
-            )
+            );
         }
 
-        this.doGenerate();
+        this.doGenerateTree();
+        this.doGenerateLightning();
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
@@ -234,7 +238,7 @@ class MyScene extends CGFscene {
         if (this.gui.isKeyPressed("KeyL")) {
             text += " L ";
             if (this.lightning.animation == false) {
-                this.doGenerate();
+                this.doGenerateLightning();
                 this.lightning.animation = true;
                 this.lightning.startAnimation(t);
             }
