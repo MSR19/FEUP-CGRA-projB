@@ -93,6 +93,7 @@ class MyScene extends CGFscene {
     }
     update(t) {
         this.checkSticks();
+        this.bird.update(t);
         this.checkKeys(t);
         if (this.lightning.animation) {
             this.lightning.update(t);

@@ -52,13 +52,8 @@ class MyWing extends CGFobject {
         this.triangle5.disableNormalViz();
     }
     
-    update(up) {
-        if (up) {
-            this.angle += 0.07;
-        }
-        else {
-            this.angle -= 0.07;
-        }
+    update(t) {
+        this.angle = Math.sin(t / 500 * Math.PI) - Math.PI *2;
     }
 
     displayfirstpart() {

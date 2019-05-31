@@ -58,10 +58,6 @@ class MyBird extends CGFobject {
     }
 
     display(scaleFactor) {
-        
-        this.update();
-        this.rWing.update(this.up);
-        this.lWing.update(this.up);
         this.scene.pushMatrix();
         this.scene.translate(this.x, this.y, this.z);
         this.scene.rotate(this.direction, 0, 1, 0);
@@ -186,11 +182,13 @@ class MyBird extends CGFobject {
         this.lWing.disableNormalViz();
     }
 
-    update() {
+    update(t) {
         
         this.x += Math.cos(this.direction) * this.speed;
         this.z -= Math.sin(this.direction) * this.speed;
-
+        this.rWing.update(t);
+        this.lWing.update(t);
+        this.y = Math.sin(t / 500 * Math.PI) + 5;
         if (this.descending)   {            
             this.rad = this.rad + 0.02;
             this.y = 1.5*Math.sin(this.rad)+3.5;
@@ -199,24 +197,7 @@ class MyBird extends CGFobject {
                 this.descending = false;
             }
         }
-        else {
-            if (this.up) {
-                if (this.y > 5) {
-                    this.up = false;
-                }
-                else {
-                    this.y += 0.03;
-                }
-            }
-            else {
-                if (this.y < 4) {
-                    this.up = true;
-                }
-                else {
-                    this.y -= 0.03;
-                }
-            }
-        }
+
     }
 
     turn(v) {
