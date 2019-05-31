@@ -21,6 +21,29 @@ class MyScene extends CGFscene {
         this.enableTextures(true);
         this.setUpdatePeriod(50);
 
+        //Objects connected to MyInterface
+        this.axiom = "X"; //
+        this.ruleF = "FF"; //
+        this.ruleX = "F[-X][X]F[-X]+FX";
+        this.angle = 25.0;
+        this.iterations = 3;
+        this.scaleFactor = 0.5;
+        this.lightning = new MyLightning(this);
+
+        this.doGenerate = function () {
+            this.lightning.generate(
+                this.axiom,
+                {
+                    "F": [this.ruleF],
+                    "X": [this.ruleX]
+                },
+                this.angle,
+                this.iterations,
+                this.scaleFactor
+            );
+        }
+
+        this.doGenerate();
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.plane = new Plane(this, 32);
@@ -28,7 +51,7 @@ class MyScene extends CGFscene {
         this.cubeMap = new MyCubeMap (this);
         this.terrain = new MyTerrain(this);
         this.bird = new MyBird(this, 0, 4, 0, 0, 0);
-        this.wing = new MyWing(this);
+
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -66,7 +89,11 @@ class MyScene extends CGFscene {
         this.setShininess(10.0);
     }
     update(t){
-        this.checkKeys();
+        this.checkKeys(t);
+        if (this.lightning.animation) {
+            this.lightning.update(t);
+        }
+
     }
 
     display() {
@@ -90,7 +117,7 @@ class MyScene extends CGFscene {
         
         this.bird.display(this.scaleFactor);
         // ---- BEGIN Primitive drawing section
-        //this.wing.display(); 
+        this.lightning.display(); 
 
         if (this.displayMap)
             this.cubeMap.display();
@@ -120,7 +147,7 @@ class MyScene extends CGFscene {
     }
 
 
-    checkKeys() {
+    checkKeys(t) {
         var text = "Keys pressed: "; var keysPressed = false;
         // Check for key codes e.g. in ​https://keycode.info/
         if (this.gui.isKeyPressed("KeyW")) {
@@ -147,6 +174,11 @@ class MyScene extends CGFscene {
             text += " R ";
             this.bird.reset();
             keysPressed = true;
+        }
+        if (this.gui.isKeyPressed("KeyL")) {
+            text += " L ";
+            this.lightning.animation = true;
+            this.lightning.startAnimation(t);
         }
         if (keysPressed) console.log(text);
     }

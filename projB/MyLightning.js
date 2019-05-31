@@ -3,10 +3,13 @@
  * @constructor
  * @param scene - Reference to MyScene object
  */
-class MyLSPlant extends CGFobject {
+class MyLightning extends MyLSystem {
     constructor(scene) {
         super(scene);
         this.init();
+        this.timeInit;
+        this.depth = 0;
+        this.animation = false;
     }
 
     init() {
@@ -23,63 +26,32 @@ class MyLSPlant extends CGFobject {
         };
     }
 
-
-    // gera o sistema L com os par�metros atuais da cena
-    generate(_axiom, _productions, _angle, _iterations, _scale) {
-        // copia o axioma da cena para iniciar a sequência de desenvolvimento
-        this.axiom = _axiom;
-
-        // cria as producoes
-        this.productions = _productions;
-
-        // angulo de rotacao
-        this.angle = _angle * Math.PI / 180.0;
-
-        // numero de iteracoes
-        this.iterations = _iterations;
-
-        // escalamento dos elementos dependente do numero de iteracoes
-        this.scale = Math.pow(_scale, this.iterations - 1);
-
-        // desenvolve a sequencia de desenvolvimento do Sistema L
-        this.iterate()
+    update(t) {
+        if (this.depth) {
+            this.timepassed = t - this.timeInit;
+            if (this.timepassed <= 1 || this.depth >= this.axiom.length) {
+                this.depth = this.axiom.length * this.timepassed;
+            }
+            else {
+                this.depth = 0;
+                this.animation = false;
+            }
+        }
     }
 
-
-    // desenvolve o axioma ao longo de uma sequência de desenvolvimento com um determinado número de iterações
-    iterate() {
-        var i, j;
-        for (i = 0; i < this.iterations; ++i) {
-            var newString = "";
-
-            // substitui cada um dos caracteres da cadeia de caracteres de acordo com as produções
-            for (j = 0; j < this.axiom.length; ++j) {
-                var axiomProductions = this.productions[this.axiom[j]];
-                // aplicar producoes
-                if (axiomProductions === undefined) {
-                    // caso nao se aplique nenhuma producao deixa estar o caracter original
-                    newString += this.axiom[j];
-                } else if (axiomProductions.length == 1) {
-                    // caso apenas exista uma producao, aplica-a
-                    newString += axiomProductions[0];
-                } else {
-                    // sistema estocastico - varias producoes sao aplicaveis - seleciona aleatoriamente
-                    newString += axiomProductions[Math.floor(Math.random() * axiomProductions.length)];
-                }
-            }
-
-            this.axiom = newString;
-        }
-        console.log("Final: " + this.axiom);
-        console.log("(length: " + this.axiom.length + ")");
+    startAnimation(t) {
+        this.iterate();
+        this.update(t);
+        this.timeInit = t;
+        this.depth = 1;
+        this.timeInit = t;
     }
 
     display() {
         this.scene.pushMatrix();
-        this.scene.scale(this.scale, this.scale, this.scale);
+        this.scene.scale(this.scale*3, -this.scale* 3, this.scale*3);
 
         var i;
-
         // percorre a cadeia de caracteres
         for (i = 0; i < this.axiom.length; ++i) {
 
@@ -124,8 +96,11 @@ class MyLSPlant extends CGFobject {
                 default:
                     var primitive = this.grammar[this.axiom[i]];
 
-                    if (primitive) {
-                        primitive.Display();
+                    if (primitive && i < this.depth) {
+                        this.scene.pushMatrix();
+                        this.scene.scale(0.2, 1, 0.2);
+                        primitive.display();
+                        this.scene.popMatrix();
                         this.scene.translate(0, 1, 0);
                     }
                     break;

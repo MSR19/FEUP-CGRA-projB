@@ -33,7 +33,6 @@ class MyWing extends CGFobject {
         this.outerx = Math.cos(this.angle) * 2;
         this.scene.translate(this.outerx, this.outery, this.outerz);
         this.displayouterpart();
-
         this.scene.popMatrix();
     }
     
