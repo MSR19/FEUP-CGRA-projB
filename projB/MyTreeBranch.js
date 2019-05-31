@@ -4,10 +4,13 @@
  * @param scene - Reference to MyScene object
  */
 class MyTreeBranch extends CGFobject {
-	constructor(scene) {
+	constructor(scene, x, z) {
         super(scene);
         this.init(scene);
         this.scene = scene;
+        this.x = x;
+        this.z = z;
+        this.apanhado = false;
     }
 
 	init(scene) {
@@ -38,7 +41,8 @@ class MyTreeBranch extends CGFobject {
 
     }
 
-	display () {     
+	display () {    
+        if (!this.apanhado) { 
         this.scene.pushMatrix();
         //Para por o log deitado
         //this.scene.rotate(Math.PI/2,1,0,0);
@@ -51,6 +55,7 @@ class MyTreeBranch extends CGFobject {
         this.scene.translate(0,1,0);
         this.baseTop.display();
         this.scene.popMatrix();
+        }
     }
     
     enableNormalViz() {

@@ -14,6 +14,9 @@ class MyBird extends CGFobject {
         this.up = true;
         this.direction = angle;
         this.speed = speed;
+        this.catch = false;
+        this.descending = false;
+        this.rad = 0;
     }
 
 	init(scene) {
@@ -26,6 +29,9 @@ class MyBird extends CGFobject {
         this.lTail = new MyTriangle (this.scene);
         this.rWing = new MyWing (this.scene);
         this.lWing = new MyWing (this.scene);
+        this.rLeg = new MyLeg(this.scene);
+        this.lLeg = new MyLeg(this.scene);
+        this.log = new MyTreeBranch(this.scene);
 
         //this.textureFeathers = new CGFtexture(this.scene, 'images/feathers.jpg');
         this.materialFeathers = new CGFappearance(this.scene);
@@ -125,8 +131,37 @@ class MyBird extends CGFobject {
         this.lWing.display();
         this.scene.popMatrix();
 
-        this.scene.popMatrix();
+       
+        if(this.catch) {
+            this.rLeg.update(true);
+            this.lLeg.update(true);
 
+            this.scene.pushMatrix();
+            this.scene.rotate(Math.PI/2,1,0,0);
+            this.scene.scale(0.5,1,0.5);
+            this.scene.translate(0.6,-1,1.8);
+            this.log.display();
+            this.scene.popMatrix(); 
+        }
+        else {
+            this.rLeg.update(false);
+            this.lLeg.update(false);
+        }
+
+
+        this.materialBeak.apply();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0, -1.3, -0.4);
+        this.lLeg.display();
+        this.scene.popMatrix(); 
+
+        this.scene.pushMatrix();
+        this.scene.translate(0, -1.3, 0.4);
+        this.rLeg.display();
+        this.scene.popMatrix(); 
+
+        this.scene.popMatrix();
     }
     
     enableNormalViz() {
@@ -155,24 +190,33 @@ class MyBird extends CGFobject {
         
         this.x += Math.cos(this.direction) * this.speed;
         this.z -= Math.sin(this.direction) * this.speed;
-        if (this.up) {
-            if (this.y > 5) {
-                this.up = false;
-            }
-            else {
-                
-                this.y += 0.03;
+
+        if (this.descending)   {            
+            this.rad = this.rad + 0.02;
+            this.y = 1.5*Math.sin(this.rad)+3.5;
+
+            if (this.rad > (Math.PI*2 + Math.PI/2)) {
+                this.descending = false;
             }
         }
         else {
-            if (this.y < 4) {
-                this.up = true;
+            if (this.up) {
+                if (this.y > 5) {
+                    this.up = false;
+                }
+                else {
+                    this.y += 0.03;
+                }
             }
             else {
-                this.y -= 0.03;
+                if (this.y < 4) {
+                    this.up = true;
+                }
+                else {
+                    this.y -= 0.03;
+                }
             }
         }
-
     }
 
     turn(v) {
@@ -182,6 +226,13 @@ class MyBird extends CGFobject {
 
     accelerate(v) {
         this.speed += v;
+    }
+
+    descent() {
+        if (this.descending == false) {
+            this.rad = Math.PI/2;
+        }
+        this.descending = true;    
     }
 
     reset() {

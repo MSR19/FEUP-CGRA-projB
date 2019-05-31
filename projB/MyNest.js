@@ -4,11 +4,13 @@
  * @param scene - Reference to MyScene object
  */
 class MyNest extends CGFobject {
-	constructor(scene, numLogs) {
+	constructor(scene, numLogs, x, z) {
         super(scene);
         this.scene = scene;
         this.numLogs = numLogs;
         this.init(scene, numLogs);
+        this.x = x;
+        this.z = z;
     }
 
 	init(scene, numLogs) {
@@ -20,7 +22,10 @@ class MyNest extends CGFobject {
     }
 
 	display () {     
-        this.scene.pushMatrix();
+        this.scene.pushMatrix();    
+
+        this.scene.translate(this.x,0,this.z);
+
         var camada = 2;
         var camadasPassadas = 0;
         var passo = 1;
@@ -83,33 +88,6 @@ class MyNest extends CGFobject {
             }
         }
 
-
-        //camada para em 0, 4, 12, 24... //
-
-        //o primeiro ponto 
-        //Para a esquerda
-
-        //o segundo ponto
-        //Para a direita
-
-        //primeira medate mais um
-        //um ponto para cima
-
-        //segunda metade mais o anteriro
-        //um ponto para baixo
-        
-        /*
-        *        8   
-        *
-        *    7   3   9
-        *       
-        *5   1   0   2   6
-        *
-        *   10   4   12
-        * 
-        *       11
-        */
-
         this.scene.popMatrix();
     }
     
@@ -119,11 +97,13 @@ class MyNest extends CGFobject {
     }
 
     enableNormalViz() {
-        this.cilinder.enableNormalViz();
+        for (var i = 0; i != numLogs; i++)
+            this.logs[i].enableNormalViz();
     }
     
     disableNormalViz() {
-        this.cilinder.disableNormalViz();
+        for (var i = 0; i != numLogs; i++)
+            this.logs[i].disableNormalViz();
     }
 
 }
