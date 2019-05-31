@@ -183,19 +183,30 @@ class MyBird extends CGFobject {
     }
 
     update(t) {
-        
         this.x += Math.cos(this.direction) * this.speed;
         this.z -= Math.sin(this.direction) * this.speed;
         this.rWing.update(t);
         this.lWing.update(t);
-        this.y = Math.sin(t / 500 * Math.PI) + 5;
-        if (this.descending)   {            
-            this.rad = this.rad + 0.02;
-            this.y = 1.5*Math.sin(this.rad)+3.5;
+        
 
-            if (this.rad > (Math.PI*2 + Math.PI/2)) {
+
+        if (this.descending)   {            
+            this.rad = (t/1000) * Math.PI;
+            
+            
+            if (t - this.tinicial < 1000) {
+                this.y -= 0.25;
+            }
+
+            else if (t- this.tinicial < 2000) {
+                this.y += 0.25;
+            }
+            else if (t - this.tinicial > 2000) {
                 this.descending = false;
             }
+        }
+        else {
+            this.y = Math.sin(t / 500 * Math.PI) + 5;
         }
 
     }
@@ -209,11 +220,14 @@ class MyBird extends CGFobject {
         this.speed += v;
     }
 
-    descent() {
+    descent(t) {
+    
         if (this.descending == false) {
-            this.rad = Math.PI/2;
+            this.rad = Math.PI / 2;
+            this.descending = true;
+            this.tinicial = t; 
         }
-        this.descending = true;    
+
     }
 
     reset() {

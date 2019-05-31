@@ -206,7 +206,7 @@ class MyScene extends CGFscene {
 
         if (this.gui.isKeyPressed("KeyP")) {
             text += " P ";
-            this.bird.descent();
+            this.bird.descent(t);
             keysPressed = true;
         }
 
