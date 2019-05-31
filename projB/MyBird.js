@@ -226,7 +226,7 @@ class MyBird extends CGFobject {
             this.rad = Math.PI / 2;
             this.descending = true;
             this.tinicial = t; 
-        }
+        }   
 
     }
 
