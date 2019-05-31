@@ -51,14 +51,10 @@ class MyScene extends CGFscene {
         this.cubeMap = new MyCubeMap(this);
         this.terrain = new MyTerrain(this);
         this.bird = new MyBird(this, 0, 4, 0, 0, 0);
-<<<<<<< HEAD
-
-=======
         this.nest = new MyNest(this, 17, 5, 5);
         this.testLeg = new MyLeg(this);
         this.logs = [];
         this.logs.push(new MyTreeBranch(this, 0, 0));
->>>>>>> e6f7d8d85001c9d37ceaaa137c3d8f729adbf812
 
         //Objects connected to MyInterface
         this.displayAxis = true;
