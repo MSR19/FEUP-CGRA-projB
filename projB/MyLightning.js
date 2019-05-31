@@ -27,29 +27,30 @@ class MyLightning extends MyLSystem {
     }
 
     update(t) {
-        if (this.depth) {
-            this.timepassed = t - this.timeInit;
-            if (this.timepassed <= 1 || this.depth >= this.axiom.length) {
-                this.depth = this.axiom.length * this.timepassed;
-            }
-            else {
-                this.depth = 0;
-                this.animation = false;
-            }
+        this.timepassed = t - this.timeInit;
+        if (this.timepassed <= 1000 && this.depth <= this.axiom.length) {
+            this.depth = this.depth + this.timepassed/2;
+        }
+        else {
+            this.depth = 0;
+        }
+
+        if (this.timepassed > 1000) {
+            this.depth = 0;
+            this.animation = false;
         }
     }
 
     startAnimation(t) {
-        this.iterate();
-        this.update(t);
-        this.timeInit = t;
-        this.depth = 1;
-        this.timeInit = t;
+        if (this.animation) {
+            this.update(t);
+            this.timeInit = t;
+        }
     }
 
     display() {
         this.scene.pushMatrix();
-        this.scene.scale(this.scale*3, -this.scale* 3, this.scale*3);
+        this.scene.scale(this.scale * 3, -this.scale * 3, this.scale * 3);
 
         var i;
         // percorre a cadeia de caracteres
@@ -98,7 +99,7 @@ class MyLightning extends MyLSystem {
 
                     if (primitive && i < this.depth) {
                         this.scene.pushMatrix();
-                        this.scene.scale(0.2, 1, 0.2);
+                        this.scene.scale(0.1, 1, 0.1);
                         primitive.display();
                         this.scene.popMatrix();
                         this.scene.translate(0, 1, 0);

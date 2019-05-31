@@ -24,7 +24,8 @@ class MyScene extends CGFscene {
         //Objects connected to MyInterface
         this.axiom = "X"; //
         this.ruleF = "FF"; //
-        this.ruleX = "F[-X][X]F[-X]+FX";
+        this.ruleX1 = "F[-X][X]F[-X]+FX";
+        this.ruleX2 = "F[X][-X]F[X]-FX";
         this.angle = 25.0;
         this.iterations = 3;
         this.scaleFactor = 0.5;
@@ -35,7 +36,7 @@ class MyScene extends CGFscene {
                 this.axiom,
                 {
                     "F": [this.ruleF],
-                    "X": [this.ruleX]
+                    "X": [this.ruleX1,this.ruleX2]
                 },
                 this.angle,
                 this.iterations,
@@ -44,6 +45,7 @@ class MyScene extends CGFscene {
         }
 
         this.doGenerate();
+
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.plane = new Plane(this, 32);
@@ -95,10 +97,7 @@ class MyScene extends CGFscene {
         this.checkSticks();
         this.bird.update(t);
         this.checkKeys(t);
-        if (this.lightning.animation) {
-            this.lightning.update(t);
-        }
-
+        this.lightning.update(t);
     }
 
     display() {
@@ -121,7 +120,12 @@ class MyScene extends CGFscene {
 
         this.bird.display(this.scaleFactor);
         // ---- BEGIN Primitive drawing section
-        this.lightning.display(); 
+
+        this.pushMatrix();
+        this.translate(-25, 37, -25);
+        this.scale(0.5, 0.5, 0.5);
+        this.lightning.display();
+        this.popMatrix();
 
         if (this.displayMap)
             this.cubeMap.display();
@@ -200,8 +204,11 @@ class MyScene extends CGFscene {
         }
         if (this.gui.isKeyPressed("KeyL")) {
             text += " L ";
-            this.lightning.animation = true;
-            this.lightning.startAnimation(t);
+            if (this.lightning.animation == false) {
+                this.doGenerate();
+                this.lightning.animation = true;
+                this.lightning.startAnimation(t);
+            }
         }
 
         if (this.gui.isKeyPressed("KeyP")) {
