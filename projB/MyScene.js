@@ -29,6 +29,23 @@ class MyScene extends CGFscene {
         this.iterations = 3;
         this.scaleFactor = 0.5;
         this.lightning = new MyLightning(this);
+        this.tree = new MyTree(this);
+
+
+        this.treeaxiom = "X"; //
+        this.treeruleF = "FF"; //
+        this.treeruleX = "F[-X][X]F[-X]+FX";
+        this.treeruleX1 = "F[-X][X]+X";
+        this.treeruleX2 = "F[+X]-X";
+        this.treeruleX4 = "F[/X][X]F[\\X]+X";
+        this.treeruleX5 = "F[\X][X]/X";
+        this.treeruleX6 = "F[/X]\X";
+        this.treeruleX7 = "F[^X][X]F[&X]^X";
+        this.treeruleX8 = "F[^X]&X";
+        this.treeruleX9 = "F[&X]^X";
+        this.treeangle = 30.0;
+        this.treeiterations = 6;
+        this.treescaleFactor = 0.8;
 
         this.doGenerate = function () {
             this.lightning.generate(
@@ -41,6 +58,16 @@ class MyScene extends CGFscene {
                 this.iterations,
                 this.scaleFactor
             );
+            this.tree.generate(
+                this.treeaxiom,
+                {
+                    "F": [this.treeruleF],
+                    "X": [this.treeruleX, this.treeruleX1, this.treeruleX2, this.treeruleX3, this.treeruleX4, this.treeruleX5, this.treeruleX6, this.treeruleX7, this.treeruleX8, this.treeruleX9]
+                },
+                this.treeangle,
+                this.treeiterations,
+                this.treescaleFactor               
+            )
         }
 
         this.doGenerate();
@@ -122,6 +149,8 @@ class MyScene extends CGFscene {
         this.bird.display(this.scaleFactor);
         // ---- BEGIN Primitive drawing section
         this.lightning.display(); 
+
+        this.tree.display();
 
         if (this.displayMap)
             this.cubeMap.display();
