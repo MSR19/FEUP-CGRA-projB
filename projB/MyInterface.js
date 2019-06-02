@@ -29,7 +29,7 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'displayHouse').name('House');
 
          //Terrain checkBox
-        this.gui.add(this.scene, 'displayBird').name('Terrain');
+        this.gui.add(this.scene, 'displayTerrain').name('Terrain');
 
          //Bird checkBox
         this.gui.add(this.scene, 'displayBird').name('Bird');
@@ -50,7 +50,7 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'displayForest').name('Forest');
 
          //ScaleFactor
-        this.gui.add(this.scene, 'scaleFactor', 0.1, 3).name('scaleFactor');
+        this.gui.add(this.scene, 'scaleFactor', 0.5, 3).name('scaleFactor');
 
          //SpeedFactor
         this.gui.add(this.scene, 'speedFactor', 0.1, 3).name('speedFactor');

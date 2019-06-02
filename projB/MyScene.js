@@ -84,7 +84,7 @@ class MyScene extends CGFscene {
         this.cubeMap = new MyCubeMap(this);
         this.terrain = new MyTerrain(this);
         this.bird = new MyBird(this, 0, 4, 0, 0, 0);
-        this.nest = new MyNest(this, 17, 5, 5);
+        this.nest = new MyNest(this, 10, -5.5, 9.5);
         this.testLeg = new MyLeg(this);
         this.logs = [];
         this.logs.push(new MyTreeBranch(this, 0, 0));
@@ -111,7 +111,7 @@ class MyScene extends CGFscene {
         this.materialPlane.setSpecular(1, 1, 1, 1);
         this.materialPlane.setShininess(120);
 
-        this.texturePlane = new CGFtexture(this, "images/mineTop.png");
+        this.texturePlane = new CGFtexture(this, "images/waterTex.jpg");
         this.materialPlane.setTexture(this.texturePlane);
         this.materialPlane.setTextureWrap('REPEAT', 'REPEAT');
 
@@ -183,6 +183,7 @@ class MyScene extends CGFscene {
         if (this.displayPlane) {
             this.materialPlane.apply();
             this.pushMatrix();
+            this.translate(0,-3.5,0);
             this.rotate(-0.5 * Math.PI, 1, 0, 0);
             this.scale(500, 500, 1);
             this.plane.display();
@@ -191,13 +192,17 @@ class MyScene extends CGFscene {
 
         if (this.displayHouse) {
             this.pushMatrix();
-            this.translate(12, 0, 0);
+            this.translate(12, 0, -2);
+            this.scale(0.3,0.3,0.3);
             this.house.display();
             this.popMatrix();
         }
 
         if (this.displayTerrain) {
+            this.pushMatrix();
+            this.translate(0,-3.5,0);
             this.terrain.display();
+            this.popMatrix();
         }
 
         if (this.displayBird) {
@@ -223,7 +228,10 @@ class MyScene extends CGFscene {
 
 
         if (this.displayNest) {
+            this.pushMatrix();
+            this.translate(0,-1,0);
             this.nest.display();
+            this.popMatrix();
         }
         // ---- END Primitive drawing section
     }
@@ -290,7 +298,7 @@ class MyScene extends CGFscene {
                     }
                 }
                 if (this.displayNest) {
-                    if (this.bird.catch && (Math.abs(this.bird.x - this.nest.x) < 1) && (Math.abs(this.bird.z - this.nest.z) < 1)) {
+                    if (this.bird.catch && (Math.abs(this.bird.x - this.nest.x) < 2) && (Math.abs(this.bird.z - this.nest.z) < 2)) {
                         this.nest.newLog();
                         this.bird.catch = false;
                     }
