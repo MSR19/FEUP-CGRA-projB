@@ -33,27 +33,32 @@ class MyBird extends CGFobject {
         this.lLeg = new MyLeg(this.scene);
         this.log = new MyTreeBranch(this.scene, 0, 0);
 
-        //this.textureFeathers = new CGFtexture(this.scene, 'images/feathers.jpg');
+        this.textureFeathers = new CGFtexture(this.scene, 'images/feathers.jpg');
         this.materialFeathers = new CGFappearance(this.scene);
         this.materialFeathers.setAmbient(0.4, 0.4, 1, 1.0);
         this.materialFeathers.setDiffuse(0.4, 0.4, 1, 1.0);
         this.materialFeathers.setSpecular(0.4, 0.4, 1, 1.0);
         this.materialFeathers.setShininess(10.0);
-        //this.materialFeathers.setTexture(this.textureFeathers);
-        //this.materialFeathers.setTextureWrap('REPEAT', 'REPEAT');
+        this.materialFeathers.setTexture(this.textureFeathers);
+        this.materialFeathers.setTextureWrap('REPEAT', 'REPEAT');
 
+        this.textureBeak = new CGFtexture(this.scene, 'images/beak.jpg');
         this.materialBeak = new CGFappearance(this.scene);
         this.materialBeak.setAmbient(1, 1, 0, 1.0);
         this.materialBeak.setDiffuse(1, 1, 0, 1.0);
         this.materialBeak.setSpecular(1, 1, 0, 1.0);
         this.materialBeak.setShininess(10.0);
+        this.materialBeak.setTexture(this.textureBeak);
+        this.materialBeak.setTextureWrap('REPEAT', 'REPEAT');
 
-
+        this.textureEyes = new CGFtexture(this.scene, 'images/eye.jpg');
         this.materialEyes = new CGFappearance(this.scene);
         this.materialEyes.setAmbient(0, 0, 0, 1.0);
         this.materialEyes.setDiffuse(0, 0, 0, 1.0);
         this.materialEyes.setSpecular(0, 0, 0, 1.0);
-        this.materialEyes.setShininess(10.0);;
+        this.materialEyes.setShininess(10.0);
+        this.materialEyes.setTexture(this.textureEyes);
+        this.materialEyes.setTextureWrap('REPEAT', 'REPEAT');
 
     }
 
