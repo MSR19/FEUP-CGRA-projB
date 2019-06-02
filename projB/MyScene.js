@@ -47,9 +47,9 @@ class MyScene extends CGFscene {
         this.treeruleX7 = "F[^X][X]F[&X]^X";
         this.treeruleX8 = "F[^X]&X";
         this.treeruleX9 = "F[&X]^X";
-        this.treeangle = 30.0;
-        this.treeiterations = 6;
-        this.treescaleFactor = 0.8;
+        this.treeangle = 20.0;
+        this.treeiterations = 3;
+        this.treescaleFactor = 1.5;
 
         this.doGenerateLightning = function () {
             this.lightning.generate(
@@ -322,6 +322,7 @@ class MyScene extends CGFscene {
                             if ((Math.abs(this.bird.x - this.logs[i].x) < 1) && (Math.abs(this.bird.z - this.logs[i].z) < 1)) {
                                 this.bird.catch = true;
                                 this.logs[i].apanhado = true;
+                                this
                             }
                         }
                     }

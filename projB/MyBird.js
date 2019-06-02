@@ -4,7 +4,7 @@
  * @param scene - Reference to MyScene object
  */
 class MyBird extends CGFobject {
-	constructor(scene, x, y, z, angle, speed) {
+    constructor(scene, x, y, z, angle, speed) {
         super(scene);
         this.init(scene);
         this.scene = scene;
@@ -19,16 +19,16 @@ class MyBird extends CGFobject {
         this.rad = 0;
     }
 
-	init(scene) {
-        this.body = new MySphere (this.scene);
-        this.head = new MySphere (this.scene);
-        this.rEye = new MySphereTop (this.scene);
-        this.lEye = new MySphereTop (this.scene);
-        this.beak = new MyPyramid (this.scene, 3, 3);
-        this.rTail = new MyTriangle (this.scene);
-        this.lTail = new MyTriangle (this.scene);
-        this.rWing = new MyWing (this.scene);
-        this.lWing = new MyWing (this.scene);
+    init(scene) {
+        this.body = new MySphere(this.scene);
+        this.head = new MySphere(this.scene);
+        this.rEye = new MySphereTop(this.scene);
+        this.lEye = new MySphereTop(this.scene);
+        this.beak = new MyPyramid(this.scene, 3, 3);
+        this.rTail = new MyTriangle(this.scene);
+        this.lTail = new MyTriangle(this.scene);
+        this.rWing = new MyWing(this.scene);
+        this.lWing = new MyWing(this.scene);
         this.rLeg = new MyLeg(this.scene);
         this.lLeg = new MyLeg(this.scene);
         this.log = new MyTreeBranch(this.scene, 0, 0);
@@ -82,15 +82,15 @@ class MyBird extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(1.6, 1.4, -0.5);
         this.scene.scale(0.25, 0.25, 0.25);
-        this.scene.rotate(-Math.PI/2, 1, 0, 0);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
         this.rEye.display();
         this.scene.popMatrix();
 
-        
+
         this.scene.pushMatrix();
         this.scene.translate(1.6, 1.4, 0.5);
         this.scene.scale(0.25, 0.25, 0.25);
-        this.scene.rotate(Math.PI/2, 1, 0, 0);
+        this.scene.rotate(Math.PI / 2, 1, 0, 0);
         this.lEye.display();
         this.scene.popMatrix();
 
@@ -105,7 +105,7 @@ class MyBird extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(0.5, 0.5, 0);
         this.scene.scale(3, 1, 1);
-        this.scene.rotate(Math.PI/8, 1, 0, 0);
+        this.scene.rotate(Math.PI / 8, 1, 0, 0);
         this.lTail.display();
         this.scene.popMatrix();
 
@@ -113,36 +113,36 @@ class MyBird extends CGFobject {
         this.scene.translate(0.5, 0.5, 0);
         this.scene.scale(3, 1, 1);
         this.scene.rotate(Math.PI, 1, 0, 0);
-        this.scene.rotate(-Math.PI/8, 1, 0, 0);
+        this.scene.rotate(-Math.PI / 8, 1, 0, 0);
         this.rTail.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(0.5, 0.6, 0.8);
         this.scene.scale(1, -1, 1);
-        this.scene.rotate(-Math.PI/2, 0, 1, 0);
+        this.scene.rotate(-Math.PI / 2, 0, 1, 0);
         this.rWing.display();
 
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(0.5, 0.6, -0.8);
-        this.scene.rotate(Math.PI/2, 0, 1, 0);
+        this.scene.rotate(Math.PI / 2, 0, 1, 0);
         this.scene.rotate(Math.PI, 1, 0, 0);
         this.lWing.display();
         this.scene.popMatrix();
 
-       
-        if(this.catch) {
+
+        if (this.catch) {
             this.rLeg.update(true);
             this.lLeg.update(true);
 
             this.scene.pushMatrix();
-            this.scene.rotate(Math.PI/2,1,0,0);
-            this.scene.scale(0.5,1,0.5);
-            this.scene.translate(0.6,-1,1.8);
+            this.scene.rotate(Math.PI / 2, 1, 0, 0);
+            this.scene.scale(0.5, 1, 0.5);
+            this.scene.translate(0.6, -1, 1.8);
             this.log.display();
-            this.scene.popMatrix(); 
+            this.scene.popMatrix();
         }
         else {
             this.rLeg.update(false);
@@ -155,16 +155,16 @@ class MyBird extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(0, -1.3, -0.4);
         this.lLeg.display();
-        this.scene.popMatrix(); 
+        this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(0, -1.3, 0.4);
         this.rLeg.display();
-        this.scene.popMatrix(); 
+        this.scene.popMatrix();
 
         this.scene.popMatrix();
     }
-    
+
     enableNormalViz() {
         this.body.enableNormalViz();
         this.head.enableNormalViz();
@@ -175,14 +175,14 @@ class MyBird extends CGFobject {
         this.rWing.enableNormalViz();
         this.lWing.enableNormalViz();
     }
-    
+
     disableNormalViz() {
         this.body.disableNormalViz();
         this.head.disableNormalViz();
         this.rEye.disableNormalViz();
         this.lEye.disableNormalViz();
         this.rTail.disableNormalViz();
-        this.lTail.disableNormalViz();       
+        this.lTail.disableNormalViz();
         this.rWing.disableNormalViz();
         this.lWing.disableNormalViz();
     }
@@ -190,20 +190,19 @@ class MyBird extends CGFobject {
     update(t) {
         this.x += Math.cos(this.direction) * this.speed;
         this.z -= Math.sin(this.direction) * this.speed;
-        this.rWing.update(t);
-        this.lWing.update(t);
-        
 
 
-        if (this.descending)   {            
-            this.rad = (t/1000) * Math.PI;
-            
-            
+
+
+        if (this.descending) {
+            this.rad = (t / 1000) * Math.PI;
+
+
             if (t - this.tinicial < 1000) {
                 this.y -= 0.25;
             }
 
-            else if (t- this.tinicial < 2000) {
+            else if (t - this.tinicial < 2000) {
                 this.y += 0.25;
             }
             else if (t - this.tinicial > 2000) {
@@ -211,7 +210,16 @@ class MyBird extends CGFobject {
             }
         }
         else {
-            this.y = Math.sin(t / 500 * Math.PI) + 5;
+            if (this.speed > 2) {
+                this.y = Math.sin((t * this.speed* 0.5) / 500 * Math.PI) + 5;
+                this.rWing.update(t * this.speed * 0.5);
+                this.lWing.update(t * this.speed * 0.5);
+            }
+            else {
+                this.y = Math.sin(t / 500 * Math.PI) + 5;
+                this.rWing.update(t);
+                this.lWing.update(t);
+            }
         }
 
     }
@@ -223,18 +231,18 @@ class MyBird extends CGFobject {
 
     accelerate(v) {
         if (this.speed + v >= 0)
-        this.speed += v;
+            this.speed += v;
         else
-        this.speed = 0;
+            this.speed = 0;
     }
 
     descent(t) {
-    
+
         if (this.descending == false) {
             this.rad = Math.PI / 2;
             this.descending = true;
-            this.tinicial = t; 
-        }   
+            this.tinicial = t;
+        }
 
     }
 
