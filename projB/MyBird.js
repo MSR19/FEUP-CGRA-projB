@@ -217,7 +217,10 @@ class MyBird extends CGFobject {
 
 
     accelerate(v) {
+        if (this.speed + v >= 0)
         this.speed += v;
+        else
+        this.speed = 0;
     }
 
     descent(t) {

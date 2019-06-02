@@ -28,13 +28,34 @@ class MyInterface extends CGFinterface {
          //House checkBox
         this.gui.add(this.scene, 'displayHouse').name('House');
 
-         //Terrain chackBox
-        this.gui.add(this.scene, 'displayTerrain').name('Terrain');
+         //Terrain checkBox
+        this.gui.add(this.scene, 'displayBird').name('Terrain');
 
+         //Bird checkBox
+        this.gui.add(this.scene, 'displayBird').name('Bird');
+
+         //Logs checkBox
+        this.gui.add(this.scene, 'displayLogs').name('Logs');
+
+         //ResetLog checkBox
+        this.gui.add(this.scene, 'resetLogs').name('Reset Logs');
+
+         //Nest checkBox
+        this.gui.add(this.scene, 'displayNest').name('Nest');
+
+         //Lighting checkBox
+        this.gui.add(this.scene, 'displayLighting').name('Lighting');
+
+         //Forest checkBox
+        this.gui.add(this.scene, 'displayForest').name('Forest');
+
+         //ScaleFactor
         this.gui.add(this.scene, 'scaleFactor', 0.1, 3).name('scaleFactor');
 
+         //SpeedFactor
         this.gui.add(this.scene, 'speedFactor', 0.1, 3).name('speedFactor');
-         this.initKeys();
+
+        this.initKeys();
         return true;
     }
 

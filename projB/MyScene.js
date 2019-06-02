@@ -53,7 +53,7 @@ class MyScene extends CGFscene {
                 this.axiom,
                 {
                     "F": [this.ruleF],
-                    "X": [this.ruleX1,this.ruleX2]
+                    "X": [this.ruleX1, this.ruleX2]
                 },
                 this.angle,
                 this.iterations,
@@ -61,7 +61,7 @@ class MyScene extends CGFscene {
             );
         }
 
-        this.doGenerateTree = function () { 
+        this.doGenerateTree = function () {
             this.tree.generate(
                 this.treeaxiom,
                 {
@@ -70,7 +70,7 @@ class MyScene extends CGFscene {
                 },
                 this.treeangle,
                 this.treeiterations,
-                this.treescaleFactor               
+                this.treescaleFactor
             );
         }
 
@@ -80,7 +80,7 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.plane = new Plane(this, 32);
-        this.house = new MyHouse(this);
+        this.house = new MyBetterHouse(this);
         this.cubeMap = new MyCubeMap(this);
         this.terrain = new MyTerrain(this);
         this.bird = new MyBird(this, 0, 4, 0, 0, 0);
@@ -95,6 +95,12 @@ class MyScene extends CGFscene {
         this.displayMap = false;
         this.displayHouse = false;
         this.displayTerrain = false;
+        this.displayBird = false;
+        this.displayLogs = false;
+        this.displayNest = false;
+        this.displayLighting = false;
+        this.displayForest = false;
+        this.resetLogs = false;
         this.scaleFactor = 1;
         this.speedFactor = 0.1;
 
@@ -108,6 +114,13 @@ class MyScene extends CGFscene {
         this.texturePlane = new CGFtexture(this, "images/mineTop.png");
         this.materialPlane.setTexture(this.texturePlane);
         this.materialPlane.setTextureWrap('REPEAT', 'REPEAT');
+
+        //lighting material
+        this.materialLighting = new CGFappearance(this);
+        this.materialLighting.setAmbient(1, 1, 0, 1);
+        this.materialLighting.setDiffuse(1, 1, 0, 1);
+        this.materialLighting.setSpecular(1, 1, 0, 1);
+        this.materialLighting.setShininess(120);
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -149,16 +162,20 @@ class MyScene extends CGFscene {
         //Apply default appearance
         this.setDefaultAppearance();
 
-        this.bird.display(this.scaleFactor);
         // ---- BEGIN Primitive drawing section
 
-        this.pushMatrix();
-        this.translate(-25, 37, -25);
-        this.scale(0.5, 0.5, 0.5);
-        this.lightning.display();
-        this.popMatrix();
+        if (this.displayLighting) {
+            this.materialLighting.apply();
+            this.pushMatrix();
+            this.translate(-25, 37, -25);
+            this.scale(0.5, 0.5, 0.5);
+            this.lightning.display();
+            this.popMatrix();
+        }
 
-        this.tree.display();
+        if (this.displayForest) {
+            this.tree.display();
+        }
 
         if (this.displayMap)
             this.cubeMap.display();
@@ -174,35 +191,40 @@ class MyScene extends CGFscene {
 
         if (this.displayHouse) {
             this.pushMatrix();
-            this.translate(8, 0, 0);
+            this.translate(12, 0, 0);
             this.house.display();
             this.popMatrix();
         }
 
-        if (this.displayTerrain)
+        if (this.displayTerrain) {
             this.terrain.display();
+        }
 
-        //this.pushMatrix();
-        //Para por o log deitado
-        //this.rotate(Math.PI,0,1,0);
-        //this.testLeg.display();
-        //this.popMatrix();
+        if (this.displayBird) {
+            this.bird.display(this.scaleFactor);
+        }
 
-        this.bird.display(this.scaleFactor);
+        if (this.displayLogs) {
+            for (var i = 0; i != this.logs.length; i++) {
+                this.pushMatrix();
+                //Para por o log deitado
+                this.rotate(Math.PI / 2, 1, 0, 0);
+                this.translate(0, -1, -0.5);
+                this.scale(0.5, 1, 0.5);
+                this.translate(0, 0, 0.5);
+                this.logs[i].display();
+                this.popMatrix();
 
-        for (var i = 0; i != this.logs.length; i++) {
-            this.pushMatrix();
-            //Para por o log deitado
-            this.rotate(Math.PI / 2, 1, 0, 0);
-            this.translate(0, -1, -0.5);
-            this.scale(0.5, 1, 0.5);
-            this.translate(0, 0, 0.5);
-            this.logs[i].display();
-            this.popMatrix();
+                if (this.resetLogs)
+                    this.logs[i].apanhado = false;
+            }
         }
 
 
-        this.nest.display();
+
+        if (this.displayNest) {
+            this.nest.display();
+        }
         // ---- END Primitive drawing section
     }
 
@@ -257,17 +279,21 @@ class MyScene extends CGFscene {
 
         if (this.bird.descending) {
             if (this.bird.y < 3) {
-                for (let i = 0; i != this.logs.length; i++) {
-                    if (!this.logs[i].apanhado) {
-                        if ((Math.abs(this.bird.x - this.logs[i].x) < 1) && (Math.abs(this.bird.z - this.logs[i].z) < 1)) {
-                            this.bird.catch = true;
-                            this.logs[i].apanhado = true;
+                if (this.displayLogs) {
+                    for (let i = 0; i != this.logs.length; i++) {
+                        if (!this.logs[i].apanhado) {
+                            if ((Math.abs(this.bird.x - this.logs[i].x) < 1) && (Math.abs(this.bird.z - this.logs[i].z) < 1)) {
+                                this.bird.catch = true;
+                                this.logs[i].apanhado = true;
+                            }
                         }
                     }
                 }
-                if (this.bird.catch && (Math.abs(this.bird.x - this.nest.x) < 1) && (Math.abs(this.bird.z - this.nest.z) < 1)) {
-                    this.nest.newLog();
-                    this.bird.catch = false;
+                if (this.displayNest) {
+                    if (this.bird.catch && (Math.abs(this.bird.x - this.nest.x) < 1) && (Math.abs(this.bird.z - this.nest.z) < 1)) {
+                        this.nest.newLog();
+                        this.bird.catch = false;
+                    }
                 }
             }
         }
