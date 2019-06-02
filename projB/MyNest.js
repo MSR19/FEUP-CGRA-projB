@@ -17,7 +17,7 @@ class MyNest extends CGFobject {
         this.logs = [];
 
         for(var i = 0; i != numLogs; i++) {
-            this.logs.push(new MyTreeBranch(this.scene));
+            this.logs.push(new MyTreeBranch(this.scene, 0, 0));
         }
     }
 
@@ -93,7 +93,7 @@ class MyNest extends CGFobject {
     
     newLog() {
         this.numLogs++;
-        this.logs.push(new MyTreeBranch(this.scene));
+        this.logs.push(new MyTreeBranch(this.scene,0,0));
     }
 
     enableNormalViz() {

@@ -44,9 +44,7 @@ class MyTreeBranch extends CGFobject {
 	display () {    
         if (!this.apanhado) { 
         this.scene.pushMatrix();
-        //Para por o log deitado
-        //this.scene.rotate(Math.PI/2,1,0,0);
-        //this.scene.translate(0,-1,-0.5);
+        this.scene.translate(this.x,0,this.z);
         this.materialBranch.apply();
         this.scene.scale(0.5, 2, 0.5);
         this.cilinder.display();

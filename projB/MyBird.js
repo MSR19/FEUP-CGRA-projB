@@ -31,7 +31,7 @@ class MyBird extends CGFobject {
         this.lWing = new MyWing (this.scene);
         this.rLeg = new MyLeg(this.scene);
         this.lLeg = new MyLeg(this.scene);
-        this.log = new MyTreeBranch(this.scene);
+        this.log = new MyTreeBranch(this.scene, 0, 0);
 
         //this.textureFeathers = new CGFtexture(this.scene, 'images/feathers.jpg');
         this.materialFeathers = new CGFappearance(this.scene);

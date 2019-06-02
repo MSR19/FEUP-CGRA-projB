@@ -30,7 +30,10 @@ class MyScene extends CGFscene {
         this.iterations = 3;
         this.scaleFactor = 0.5;
         this.lightning = new MyLightning(this);
-        this.tree = new MyTree(this);
+        this.trees = []
+        for (var i = 0; i != 10; i++)
+            this.trees.push(new MyTree(this));
+
 
 
         this.treeaxiom = "X"; //
@@ -62,16 +65,17 @@ class MyScene extends CGFscene {
         }
 
         this.doGenerateTree = function () {
-            this.tree.generate(
-                this.treeaxiom,
-                {
-                    "F": [this.treeruleF],
-                    "X": [this.treeruleX, this.treeruleX1, this.treeruleX2, this.treeruleX3, this.treeruleX4, this.treeruleX5, this.treeruleX6, this.treeruleX7, this.treeruleX8, this.treeruleX9]
-                },
-                this.treeangle,
-                this.treeiterations,
-                this.treescaleFactor
-            );
+            for (var i = 0; i != this.trees.length; i++)
+                this.trees[i].generate(
+                    this.treeaxiom,
+                    {
+                        "F": [this.treeruleF],
+                        "X": [this.treeruleX, this.treeruleX1, this.treeruleX2, this.treeruleX3, this.treeruleX4, this.treeruleX5, this.treeruleX6, this.treeruleX7, this.treeruleX8, this.treeruleX9]
+                    },
+                    this.treeangle,
+                    this.treeiterations,
+                    this.treescaleFactor
+                );
         }
 
         this.doGenerateTree();
@@ -87,7 +91,10 @@ class MyScene extends CGFscene {
         this.nest = new MyNest(this, 10, -5.5, 9.5);
         this.testLeg = new MyLeg(this);
         this.logs = [];
-        this.logs.push(new MyTreeBranch(this, 0, 0));
+        this.logs.push(new MyTreeBranch(this, 10, 10));
+        this.logs.push(new MyTreeBranch(this, 15, 2));
+        this.logs.push(new MyTreeBranch(this, 5, 10));
+        this.logs.push(new MyTreeBranch(this, 7, -10));
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -115,12 +122,21 @@ class MyScene extends CGFscene {
         this.materialPlane.setTexture(this.texturePlane);
         this.materialPlane.setTextureWrap('REPEAT', 'REPEAT');
 
-        //lighting material
+        //plane second textur
+        this.PlaneTexture2 = new CGFtexture(this, "images/waterMap.jpg");
+
+        //plane shader
+        this.waterShader = new CGFshader(this.gl, "shaders/water.vert", "shaders/water.frag");
+        this.waterShader.setUniformsValues({ uSampler3: 0, uSampler4: 1 });
+
+        //lighting materia           
         this.materialLighting = new CGFappearance(this);
         this.materialLighting.setAmbient(1, 1, 0, 1);
         this.materialLighting.setDiffuse(1, 1, 0, 1);
         this.materialLighting.setSpecular(1, 1, 0, 1);
         this.materialLighting.setShininess(120);
+
+
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -167,14 +183,22 @@ class MyScene extends CGFscene {
         if (this.displayLighting) {
             this.materialLighting.apply();
             this.pushMatrix();
-            this.translate(-25, 37, -25);
-            this.scale(0.5, 0.5, 0.5);
+            this.translate(-5, 22, 15);
+            this.scale(0.5, 0.3, 0.5);
+            this.rotate(Math.PI / 2, 0, 1, 0);
             this.lightning.display();
             this.popMatrix();
         }
 
         if (this.displayForest) {
-            this.tree.display();
+            this.pushMatrix();
+            this.translate(-16, 0, 3);
+            this.scale(0.5, 0.3, 0.5);
+            for (var i = 0; i != this.trees.length; i++) {
+                this.translate(4, 0, -4);
+                this.trees[i].display();
+            }
+            this.popMatrix();
         }
 
         if (this.displayMap)
@@ -182,25 +206,29 @@ class MyScene extends CGFscene {
 
         if (this.displayPlane) {
             this.materialPlane.apply();
+            this.PlaneTexture2.bind(1);
+            this.setActiveShader(this.waterShader);
             this.pushMatrix();
-            this.translate(0,-3.5,0);
+            this.translate(0, -3.5, 0);
             this.rotate(-0.5 * Math.PI, 1, 0, 0);
             this.scale(500, 500, 1);
             this.plane.display();
             this.popMatrix();
+            this.setActiveShader(this.defaultShader);
+            this.setDefaultAppearance();
         }
 
         if (this.displayHouse) {
             this.pushMatrix();
             this.translate(12, 0, -2);
-            this.scale(0.3,0.3,0.3);
+            this.scale(0.3, 0.3, 0.3);
             this.house.display();
             this.popMatrix();
         }
 
         if (this.displayTerrain) {
             this.pushMatrix();
-            this.translate(0,-3.5,0);
+            this.translate(0, -3.5, 0);
             this.terrain.display();
             this.popMatrix();
         }
@@ -210,26 +238,27 @@ class MyScene extends CGFscene {
         }
 
         if (this.displayLogs) {
-            for (var i = 0; i != this.logs.length; i++) {
-                this.pushMatrix();
-                //Para por o log deitado
-                this.rotate(Math.PI / 2, 1, 0, 0);
-                this.translate(0, -1, -0.5);
-                this.scale(0.5, 1, 0.5);
-                this.translate(0, 0, 0.5);
-                this.logs[i].display();
-                this.popMatrix();
 
-                if (this.resetLogs)
+            this.pushMatrix();
+            //this.rotate(Math.PI / 2, 1, 0, 0);
+            //dthis.translate(0, -1, -0.5);
+            for (var i = 0; i != this.logs.length; i++) {
+                this.logs[i].display();
+                if (this.resetLogs) {
                     this.logs[i].apanhado = false;
+                }
             }
+            this.popMatrix();
+
+
+
         }
 
 
 
         if (this.displayNest) {
             this.pushMatrix();
-            this.translate(0,-1,0);
+            this.translate(0, -1, 0);
             this.nest.display();
             this.popMatrix();
         }
